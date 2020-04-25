@@ -1,10 +1,10 @@
 import React from 'react';
 import { Card, CardBody, CardText, CardTitle, CardImg } from 'reactstrap';
+import { Link } from 'react-router-dom'
 
-
-function RenderDish({ dish }) {
-    if (dish != null) {
-        let comments = dish.comments.map((comment) => {
+function RenderComment({comments}){
+    if(comments != null){
+        let com = comments.map((comment) => {
             return (
                 <div key={comment.id}>
                     <p>{comment.comment}</p>
@@ -12,6 +12,16 @@ function RenderDish({ dish }) {
                 </div>
             )
         })
+    }else{
+        return(
+            <div></div>
+        );
+    }
+}
+
+function RenderDish({dish}) {
+    if (dish != null) {
+        
         return (
             <div className="row">
                 <div className="col-12 col-md-5 m-1">
@@ -19,13 +29,13 @@ function RenderDish({ dish }) {
                         <CardImg width="100" src={dish.image} />
                         <CardBody>
                             <CardTitle>{dish.name}</CardTitle>
-                            <CardText>{dish.description}</CardText>
+                            <CardText>{ dish.description}</CardText>
                         </CardBody>
                     </Card>
                 </div>
                 <div className="col-12 col-md-5 m-1">
                     <h3>Comments</h3>
-                    {comments}
+                    
                 </div>
             </div>
         )
