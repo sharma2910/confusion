@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import {
-    Button, Label, Col,
-    Row
+    Breadcrumb, BreadcrumbItem, Button, Label, Col,
+    Row, Form
 } from 'reactstrap';
-import { Control, LocalForm, Errors } from 'react-redux-form'
+import { Control, Errors, actions } from 'react-redux-form'
+import { Link } from 'react-router-dom';
 
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
@@ -15,19 +16,23 @@ class Contact extends Component {
 
     constructor(props) {
         super(props);
-
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleSubmit(values) {
         console.log("Current State: " + JSON.stringify(values));
         alert("Current State: " + JSON.stringify(values));
+        this.props.resetFeedbackForm();
     }
 
     render() {
         return (
             <div className="container">
-                <div className="row row-content">
+                <div className="row">
+                    <Breadcrumb>
+                        <BreadcrumbItem><Link to="/Home">Home</Link></BreadcrumbItem>
+                        <BreadcrumbItem active>Contact Us</BreadcrumbItem>
+                    </Breadcrumb>
                     <div className="col-12">
                         <h3>Location Information</h3>
                     </div>
@@ -58,7 +63,7 @@ class Contact extends Component {
                         <h3>Send us Your Feedback</h3>
                     </div>
                     <div className="col-12 col-md-9">
-                        <LocalForm onSubmit={(values) => this.handleSubmit(values)}>
+                        <Form model="feedback" onSubmit={(values) => this.handleSubmit(values)}>
                             <Row className="form-group">
                                 <Label htmlFor="firstname" md={2}>First Name</Label>
                                 <Col md={10}>
@@ -181,7 +186,7 @@ class Contact extends Component {
                                     </Button>
                                 </Col>
                             </Row>
-                        </LocalForm>
+                        </Form>
                     </div>
                 </div>
             </div>

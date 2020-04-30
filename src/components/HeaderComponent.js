@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
-import { Navbar, NavbarBrand, Nav, NavbarToggler, Collapse, NavItem, Jumbotron,
+import {
+    Navbar, NavbarBrand, Nav, NavbarToggler, Collapse, NavItem, Jumbotron,
     Button, Modal, ModalHeader, ModalBody,
-    Form, FormGroup, Input, Label } from 'reactstrap';
-            import { NavLink } from 'react-router-dom';
+    Form, FormGroup, Input, Label
+} from 'reactstrap';
+import { NavLink } from 'react-router-dom';
+import { baseUrl } from '../shared/baseUrl';
 
 class Header extends Component {
     constructor(props) {
@@ -45,7 +48,7 @@ class Header extends Component {
                     <Navbar dark expand="md">
                         <div className="container">
                             <NavbarToggler onClick={this.toggleNav} />
-                            <NavbarBrand className="mr-auto" href="/"><img src='http://127.0.0.1:8887/logo.png' height="30" width="41" alt='Ristorante Con Fusion' /></NavbarBrand>
+                            <NavbarBrand className="mr-auto" href="/"><img src='json-server\public\images\logo.png' height="30" width="41" alt='Ristorante Con Fusion' /></NavbarBrand>
                             <Collapse isOpen={this.state.isNavOpen} navbar>
                                 <Nav navbar>
                                     <NavItem>
@@ -82,26 +85,26 @@ class Header extends Component {
                     <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
                         <ModalHeader toggle={this.toggleModal}>Login</ModalHeader>
                         <ModalBody>
-                        <Form onSubmit={this.handleLogin}>
-                            <FormGroup>
-                                <Label htmlFor="username">Username</Label>
-                                <Input type="text" id="username" name="username"
-                                    innerRef={(input) => this.username = input} />
-                            </FormGroup>
-                            <FormGroup>
-                                <Label htmlFor="password">Password</Label>
-                                <Input type="password" id="password" name="password"
-                                    innerRef={(input) => this.password = input}  />
-                            </FormGroup>
-                            <FormGroup check>
-                                <Label check>
-                                    <Input type="checkbox" name="remember"
-                                    innerRef={(input) => this.remember = input}  />
+                            <Form onSubmit={this.handleLogin}>
+                                <FormGroup>
+                                    <Label htmlFor="username">Username</Label>
+                                    <Input type="text" id="username" name="username"
+                                        innerRef={(input) => this.username = input} />
+                                </FormGroup>
+                                <FormGroup>
+                                    <Label htmlFor="password">Password</Label>
+                                    <Input type="password" id="password" name="password"
+                                        innerRef={(input) => this.password = input} />
+                                </FormGroup>
+                                <FormGroup check>
+                                    <Label check>
+                                        <Input type="checkbox" name="remember"
+                                            innerRef={(input) => this.remember = input} />
                                     Remember me
                                 </Label>
-                            </FormGroup>
-                            <Button type="submit" value="submit" color="primary">Login</Button>
-                        </Form>
+                                </FormGroup>
+                                <Button type="submit" value="submit" color="primary">Login</Button>
+                            </Form>
                         </ModalBody>
                     </Modal>
                 </div>

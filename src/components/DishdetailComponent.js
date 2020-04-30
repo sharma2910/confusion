@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Card, CardBody, CardText, CardTitle, CardImg, Button, Modal, ModalHeader, ModalBody, Label, Row } from 'reactstrap';
 import { Control, LocalForm, Errors } from 'react-redux-form'
-
+import { Loading } from './LoadingComponent';
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
 const minLength = (len) => (val) => val && (val.length >= len);
 
@@ -25,7 +25,7 @@ class CommentForm extends Component {
 
     handleSubmit(value) {
         this.toggleModal()
-        this.props.addComment(this.props.dishId,value.rating,value.name,value.comment)
+        this.props.addComment(this.props.dishId, value.rating, value.name, value.comment)
     }
 
     render() {
@@ -77,7 +77,7 @@ class CommentForm extends Component {
     }
 }
 
-function RenderComment({ comments,addComment,dishId }) {
+function RenderComment({ comments, addComment, dishId }) {
     if (comments != null) {
         let com = comments.map((comment) => {
             return (
@@ -93,7 +93,7 @@ function RenderComment({ comments,addComment,dishId }) {
                 <br />
                 {com}
                 <CommentForm addComment={addComment}
-                             dishId={dishId}/>
+                    dishId={dishId} />
             </div>
         );
     } else {
@@ -125,16 +125,35 @@ function RenderDish({ dish }) {
 }
 
 const DishDetail = (props) => {
-    return (
-        <div className="container">
-            <div className="row">
-                <RenderDish dish={props.dish} />
-                <RenderComment comments={props.comments}
-                addComment={props.addComment}
-                dishId={props.dish.id} />
+    if (props.isLoading) {
+        return (
+            <div className="container">
+                <div className="row">
+                    <Loading />
+                </div>
             </div>
-        </div>
-    );
+        );
+    } else if (props.errMess) {
+        return (
+            <div className="container">
+                <div className="row">
+                    <h4>{props.errMess}</h4>
+                </div>
+            </div>
+        );
+    }
+    else {
+        return (
+            <div className="container">
+                <div className="row">
+                    <RenderDish dish={props.dish} />
+                    <RenderComment comments={props.comments}
+                        addComment={props.addComment}
+                        dishId={props.dish.id} />
+                </div>
+            </div>
+        );
+    }
 }
 
 
