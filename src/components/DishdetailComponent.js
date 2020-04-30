@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Card, CardBody, CardText, CardTitle, CardImg, Button, Modal, ModalHeader, ModalBody, Label, Row } from 'reactstrap';
 import { Control, LocalForm, Errors } from 'react-redux-form'
 import { Loading } from './LoadingComponent';
+import { baseUrl } from '../shared/baseUrl';
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
 const minLength = (len) => (val) => val && (val.length >= len);
 
@@ -25,7 +26,7 @@ class CommentForm extends Component {
 
     handleSubmit(value) {
         this.toggleModal()
-        this.props.addComment(this.props.dishId, value.rating, value.name, value.comment)
+        this.props.postComment(this.props.dishId, value.rating, value.name, value.comment)
     }
 
     render() {
@@ -77,7 +78,7 @@ class CommentForm extends Component {
     }
 }
 
-function RenderComment({ comments, addComment, dishId }) {
+function RenderComment({ comments, postComment, dishId }) {
     if (comments != null) {
         let com = comments.map((comment) => {
             return (
@@ -92,7 +93,7 @@ function RenderComment({ comments, addComment, dishId }) {
                 <h3>Comments</h3>
                 <br />
                 {com}
-                <CommentForm addComment={addComment}
+                <CommentForm postComment={postComment}
                     dishId={dishId} />
             </div>
         );
@@ -109,7 +110,7 @@ function RenderDish({ dish }) {
         return (
             <div className="col-12 col-md-5 m-3">
                 <Card>
-                    <CardImg width="100" src={dish.image} />
+                    <CardImg width="100" src={baseUrl+dish.image} />
                     <CardBody>
                         <CardTitle>{dish.name}</CardTitle>
                         <CardText>{dish.description}</CardText>
@@ -148,7 +149,7 @@ const DishDetail = (props) => {
                 <div className="row">
                     <RenderDish dish={props.dish} />
                     <RenderComment comments={props.comments}
-                        addComment={props.addComment}
+                        postComment={props.postComment}
                         dishId={props.dish.id} />
                 </div>
             </div>
